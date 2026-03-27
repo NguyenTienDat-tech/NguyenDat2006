@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MayTinh</string>
+    <string name="ketqua">0</string>
+    <string name="ac">AC</string>
+    <string name="nho"><![CDATA[<]]></string>
+    <string name="chiadu">%</string>
+    <string name="chiahet">/</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="sao">*</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="tru">-</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="cong">+</string>
+    <string name="khong">0</string>
+    <string name="cham">.</string>
+    <string name="bang">=</string>
+    <string name="_0">0</string>
+</resources>
