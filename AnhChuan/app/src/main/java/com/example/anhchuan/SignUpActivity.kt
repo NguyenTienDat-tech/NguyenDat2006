@@ -30,11 +30,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun SetUpListeners() {
-        binding.Login.setOnClickListener {
+        binding.button.setOnClickListener {
             InputEmail()
         }
 
-        binding.imageEye.setOnClickListener {
+        binding.password1.imageEye.setOnClickListener {
             ShowHideEye()
         }
 
@@ -48,8 +48,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun InputEmail() {
-        val email = binding.EmailText.text.toString().trim()
-        val passWord = binding.passwordText.text.toString().trim()
+        val email = binding.Email1.Email.text.toString().trim()
+        val passWord = binding.password1.textPassword.text.toString().trim()
 
         if (email.isEmpty() || passWord.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
@@ -70,15 +70,15 @@ class SignUpActivity : AppCompatActivity() {
         isEye = !isEye
 
         if (isEye) {
-            binding.passwordText.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            binding.imageEye.setImageResource(R.drawable.eyeopen)
+            binding.password1.textPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            binding.password1.imageEye.setImageResource(R.drawable.eyeopen)
         }
         else {
-            binding.passwordText.transformationMethod = PasswordTransformationMethod.getInstance()
-            binding.imageEye.setImageResource(R.drawable.eye)
+            binding.password1.textPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.password1.imageEye.setImageResource(R.drawable.eye)
         }
 
-        binding.passwordText.setSelection(binding.passwordText.length())
+        binding.password1.textPassword.setSelection(binding.password1.textPassword.length())
     }
 
     private fun signUpScreen() {

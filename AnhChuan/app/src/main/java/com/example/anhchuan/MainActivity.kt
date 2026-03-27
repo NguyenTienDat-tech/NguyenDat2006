@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Ẩn hiện password
-        binding.imageEye.setOnClickListener {
+        binding.password1.imageEye.setOnClickListener {
             ViewAndHidePassword()
         }
 
@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun validateInputsAndRegister() {
         val fullName = binding.fullName.text.toString().trim()
-        val email = binding.Email.text.toString().trim()
-        val passWord = binding.textPassword.text.toString().trim()
+        val email = binding.Email1.Email.text.toString().trim()
+        val passWord = binding.password1.textPassword.text.toString().trim()
         val phone = binding.phonenumber.text.toString().trim()
         val date = binding.date.text.toString().trim()
 
@@ -86,15 +86,16 @@ class MainActivity : AppCompatActivity() {
         isPassword = !isPassword
 
         if (isPassword) {
-            binding.textPassword.transformationMethod = HideReturnsTransformationMethod.getInstance() //Hiện mật khẩu
-            binding.imageEye.setImageResource(R.drawable.eyeopen) //Hiện ảnh mắt mở
-        }
-        else {
-            binding.textPassword.transformationMethod = PasswordTransformationMethod.getInstance() //Ẩn mật khẩu
-            binding.imageEye.setImageResource(R.drawable.eye) //Hiện ảnh mắt đóng
+            binding.password1.textPassword.transformationMethod = HideReturnsTransformationMethod.getInstance() //Hiện mật khẩu
+            binding.password1.imageEye.setImageResource(R.drawable.eyeopen) //Hiện ảnh mắt mở
         }
 
-        binding.textPassword.setSelection(binding.textPassword.length()) //Đưa con trỏ vào cuối đoạn chữ
+        else {
+            binding.password1.textPassword.transformationMethod = PasswordTransformationMethod.getInstance() //Ẩn mật khẩu
+            binding.password1.imageEye.setImageResource(R.drawable.eye) //Hiện ảnh mắt đóng
+        }
+
+        binding.password1.textPassword.setSelection(binding.password1.textPassword.length()) //Đưa con trỏ vào cuối đoạn chữ
     }
 
     private fun LoginScreen()
