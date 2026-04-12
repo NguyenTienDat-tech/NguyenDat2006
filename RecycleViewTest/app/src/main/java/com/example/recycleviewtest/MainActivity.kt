@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = RecycleAdapter { position ->
-            list.removeAt(position)
+        adapter = RecycleAdapter { nhanVienCurrent ->
+            list.remove(nhanVienCurrent)
             adapter.submitList(list.toList())
         }
 

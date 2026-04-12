@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class RecycleAdapter(
-    private val delete: (Int) -> Unit
+    private val delete: (NhanVien) -> Unit
 ): ListAdapter<NhanVien, RecycleAdapter.ViewHolder>(DiffCallBack()) {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ten: TextView = itemView.findViewById(R.id.ten)
@@ -29,7 +29,7 @@ class RecycleAdapter(
         parent.sdt.text = nhanVienCurrent.sdt
 
         parent.bin.setOnClickListener {
-            delete(position)
+            delete(nhanVienCurrent)
         }
     }
 
