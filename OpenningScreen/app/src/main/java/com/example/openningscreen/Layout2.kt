@@ -39,6 +39,10 @@ class Layout2 : Fragment() {
         binding.eye.setOnClickListener {
             replacePassword()
         }
+
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(R.id.layout3)
+        }
     }
 
     private fun replacePassword() {
