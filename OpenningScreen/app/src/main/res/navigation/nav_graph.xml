@@ -37,5 +37,12 @@
     <fragment
         android:id="@+id/layout7"
         android:name="com.example.openningscreen.Layout7"
-        android:label="PasswordChange"/>
+        android:label="PasswordChange">
+
+        <action
+            android:id="@+id/layout7_layout2"
+            app:destination="@id/layout2"
+            app:popUpTo="@id/layout2"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

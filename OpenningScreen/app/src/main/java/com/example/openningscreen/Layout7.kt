@@ -30,7 +30,7 @@ class Layout7 : Fragment() {
 
     private fun setOnCLick() {
         binding.backToLogin.setOnClickListener {
-            findNavController().navigate(R.id.layout2)
+            findNavController().navigate(R.id.layout7_layout2)
         }
     }
 
