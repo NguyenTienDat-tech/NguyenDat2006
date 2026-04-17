@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/inputtext2"
+            android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -93,7 +93,7 @@
             android:textColor="#000000"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            app:layout_constraintTop_toBottomOf="@id/inputtext2"
+            app:layout_constraintTop_toBottomOf="@id/inputEmail"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText

@@ -11,23 +11,23 @@ class OtpViewModel : ViewModel() {
 
     //navigationForgot
     fun forgotClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationForgot = true)
     }
 
     fun doneForgot() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationForgot = false)
     }
 
     //navigationReset
     fun resetClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationReset = true)
     }
 
     fun doneReset() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationReset = false)
     }
 }

@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -46,6 +47,15 @@ class LoginFragment : Fragment() {
         binding.signUp.setOnClickListener {
             viewModel.registerClick()
         }
+
+        binding.inputEmail.addTextChangedListener { //addTextChangedListener: check khi nào người dùng nhập
+            viewModel.onEmailChange(it.toString()) //it: giá trị hiện tại
+        }
+
+        binding.inputPassword.addTextChangedListener {
+            viewModel.onPasswordChange(it.toString())
+        }
+
     }
 
     private fun obseverData() {
@@ -75,6 +85,18 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.layout4)
                 viewModel.doneForgot()
             }
+
+
+            //check email
+            if (binding.inputEmail.text.toString() != isVisible.email) {
+                binding.inputEmail.setText(isVisible.email)
+            }
+
+            //check password
+            if (binding.inputPassword.text.toString() != isVisible.password) {
+                binding.inputPassword.setText(isVisible.password)
+            }
+
         }
     }
 

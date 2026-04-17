@@ -10,12 +10,12 @@ class SuccessViewModel : ViewModel(){
     val uiState: LiveData<RegisterUiState> = _uiState
 
     fun loginClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = true)
     }
 
     fun doneLogin() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = false)
     }
 }

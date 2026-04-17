@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
@@ -51,6 +52,14 @@ class ResetPasswordFragment : Fragment() {
         binding.eye1.setOnClickListener {
             viewModel.changePassword1()
         }
+
+        binding.inputPassword.addTextChangedListener {
+            viewModel.onPasswordChange(it.toString())
+        }
+
+        binding.inputPassword1.addTextChangedListener {
+            viewModel.onPasswordChange1(it.toString())
+        }
     }
 
     private fun obseverData() {
@@ -92,6 +101,16 @@ class ResetPasswordFragment : Fragment() {
             if (isVisible.navigationSuccess) {
                 findNavController().navigate(R.id.layout7)
                 viewModel.doneSuccess()
+            }
+
+            //check password
+            if (binding.inputPassword.text.toString() != isVisible.password) {
+                binding.inputPassword.setText(isVisible.password)
+            }
+
+            //check password1
+            if (binding.inputPassword1.text.toString() != isVisible.password1) {
+                binding.inputPassword1.setText(isVisible.password1)
             }
         }
     }

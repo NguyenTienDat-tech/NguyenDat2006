@@ -36,10 +36,10 @@ class WelcomeFragment : Fragment() {
 
     private fun setOnClick() {
         binding.signUp.setOnClickListener {
-            findNavController().navigate(R.id.layout2)
+            viewModel.loginClick()
         }
         binding.createAccount.setOnClickListener {
-            findNavController().navigate(R.id.layout3)
+            viewModel.registerClick()
         }
     }
 
@@ -47,7 +47,7 @@ class WelcomeFragment : Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
             //NavigationLogin
             if (isVisible.navigationLogin) {
-                findNavController().navigate(R.id.layout7_layout2)
+                findNavController().navigate(R.id.layout2)
                 viewModel.doneLogin()
             }
 

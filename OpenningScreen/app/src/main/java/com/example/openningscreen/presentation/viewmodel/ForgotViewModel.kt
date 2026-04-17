@@ -11,23 +11,23 @@ class ForgotViewModel : ViewModel() {
 
     //navigationOTP
     fun otpClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationOTP = true)
     }
 
     fun doneOTP() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationOTP = false)
     }
 
     //navigationLogin
     fun loginClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = true)
     }
 
     fun doneLogin() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = false)
     }
 }

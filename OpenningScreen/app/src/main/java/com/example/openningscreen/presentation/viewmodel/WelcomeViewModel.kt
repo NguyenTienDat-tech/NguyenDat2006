@@ -10,22 +10,22 @@ class WelcomeViewModel : ViewModel() {
     val uiState: LiveData<WelcomeUiState> = _uiState
 
     fun loginClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = true)
     }
 
     fun doneLogin() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationLogin = false)
     }
 
     fun registerClick() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationRegister = true)
     }
 
     fun doneRegister() {
-        val current = _uiState.value!!
+        val current = _uiState.value ?: return
         _uiState.value = current.copy(navigationRegister = false)
     }
 }
