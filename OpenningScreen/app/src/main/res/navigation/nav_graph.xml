@@ -6,38 +6,38 @@
 
     <fragment
         android:id="@+id/layout1"
-        android:name="com.example.openningscreen.Layout1"
-        android:label="name"/>
+        android:name="com.example.openningscreen.presentation.ui.WelcomeFragment"
+        android:label="Welcome"/>
 
     <fragment
         android:id="@+id/layout2"
-        android:name="com.example.openningscreen.Layout2"
-        android:label="signUp"/>
+        android:name="com.example.openningscreen.presentation.ui.LoginFragment"
+        android:label="Login"/>
 
     <fragment
         android:id="@+id/layout3"
-        android:name="com.example.openningscreen.Layout3"
-        android:label="create"/>
+        android:name="com.example.openningscreen.presentation.ui.RegisterFragment"
+        android:label="Register"/>
 
     <fragment
         android:id="@+id/layout4"
-        android:name="com.example.openningscreen.Layout4"
-        android:label="forgotpassword"/>
+        android:name="com.example.openningscreen.presentation.ui.ForgotPasswordFragment"
+        android:label="ForgotPassword"/>
 
     <fragment
         android:id="@+id/layout5"
-        android:name="com.example.openningscreen.Layout5"
-        android:label="OTP"/>
+        android:name="com.example.openningscreen.presentation.ui.OtpVerificationFragment"
+        android:label="OtpVerification"/>
 
     <fragment
         android:id="@+id/layout6"
-        android:name="com.example.openningscreen.layout6"
+        android:name="com.example.openningscreen.presentation.ui.ResetPasswordFragment"
         android:label="ResetPassword"/>
 
     <fragment
         android:id="@+id/layout7"
-        android:name="com.example.openningscreen.Layout7"
-        android:label="PasswordChange">
+        android:name="com.example.openningscreen.presentation.ui.ResetSuccessFragment"
+        android:label="ResetSuccess">
 
         <action
             android:id="@+id/layout7_layout2"
