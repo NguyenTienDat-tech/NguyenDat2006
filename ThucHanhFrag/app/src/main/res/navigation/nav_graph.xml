@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.thuchanhfrag.presentation.ui.HomeFragment"
+        android:label="Home"/>
+
+    <fragment
+        android:id="@+id/blogFragment"
+        android:name="com.example.thuchanhfrag.presentation.ui.BlogFragment"
+        android:label="Blog"/>
+
+    <fragment
+        android:id="@+id/maytinh"
+        android:name="com.example.thuchanhfrag.presentation.ui.MayTinh"
+        android:label="maytinh"/>
+
+    <fragment
+        android:id="@+id/loancalculator"
+        android:name="com.example.thuchanhfrag.presentation.ui.LoanCalculator"
+        android:label="loancalculator"/>
+
+    <fragment
+        android:id="@+id/bankingcalculator"
+        android:name="com.example.thuchanhfrag.presentation.ui.BankingCalculator"
+        android:label="bankingcalculator"/>
+
+    <fragment
+        android:id="@+id/othercalculator"
+        android:name="com.example.thuchanhfrag.presentation.ui.OtherCalculator"
+        android:label="othercalculator"/>
+
+    <fragment
+        android:id="@+id/textanh1"
+        android:name="com.example.thuchanhfrag.presentation.ui.TextAnh1"
+        android:label="textanh1"/>
+
+    <fragment
+        android:id="@+id/bookmax"
+        android:name="com.example.thuchanhfrag.presentation.ui.Bookmark"
+        android:label="bookmax"/>
+
+
+</navigation>

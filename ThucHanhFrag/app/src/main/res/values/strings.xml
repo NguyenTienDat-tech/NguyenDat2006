@@ -1,0 +1,34 @@
+<resources>
+
+    //fragment_block
+    <string name="app_name" />
+    <string name="block">BLOCK</string>
+    <string name="bookmark">Bookmark</string>
+
+    //MayTinh
+    <string name="ketqua">0</string>
+    <string name="ac">AC</string>
+    <string name="nho"><![CDATA[<]]></string>
+    <string name="chiadu">%</string>
+    <string name="chiahet">/</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="sao">*</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="tru">-</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="cong">+</string>
+    <string name="khong">0</string>
+    <string name="cham">.</string>
+    <string name="bang">=</string>
+    <string name="_0">0</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textanh1"><![CDATA[The purpose of business loans is to assist businesses in meeting their financing needs. Business loans offer crucial funding for ongoing business operations, planned growth, and unforeseen costs. \n In order to meet your financial needs, many lenders offer specialised business loans with competitive interest rates. \nFor entrepreneurs and businesses, an in-depth understanding of Business Loan Interest Rates is essential, as it has an immediate impact on financial decisions and the overall viability of strategic efforts. \n\n\n\nThe percentage that a lender charges for providing funds to a firm is known as the interest rate on a business loan. This rate is an important factor in figuring out how much the loan will cost overall because it indicates the cost of borrowing. \nThe type of firm, creditworthiness, and state of the market all have an impact on business loan interest rates. Businesses must comprehend these rates because they immediately affect enterprises’ financial viability and have an impact on strategic decision-making. \nEntrepreneurs frequently seek loans with advantageous interest rates in order to improve their overall financial outcomes. \n\nBusiness Loan Interest Rates Details \n\nBelow we have explained the interest rate for business loan \n\n\n\nParticulars \n\nDetails \n\nLoan Amount \n\nMin – 50,000, Max – 10 lakhs \n\nTenure \n\nMin – 6 Months, Max – 36 Months \n\nAge \n\nMin-23, Max-58 (Co-applicant required if age >55) \n\nRate of Interest \n\n19.99% to 26% p.a \n\nProcessing Fee \n\n2% to 2.99% + GST]]></string>
+
+</resources>
