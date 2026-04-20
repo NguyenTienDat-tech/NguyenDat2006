@@ -9,10 +9,15 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentLoginBinding
+import com.example.openningscreen.presentation.event.LoginEvent
 import com.example.openningscreen.presentation.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -32,7 +37,8 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.bind(view)
 
         setOnClick()
-        obseverData()
+        stateData()
+        eventData()
     }
 
     private fun setOnClick() {
@@ -58,45 +64,52 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //ChangePassword
-            if (isVisible.isPasswordVisible) {
-                binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeopen)
+    private fun stateData() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { isVisible ->
+                    //ChangePassword
+                    if (isVisible.isPasswordVisible) {
+                        binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeopen)
+                    }
+                    else {
+                        binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeclose)
+                    }
+
+                    binding.inputPassword.setSelection(binding.inputPassword.length())
+
+
+                    //check email
+                    if (binding.inputEmail.text.toString() != isVisible.email) {
+                        binding.inputEmail.setText(isVisible.email)
+                    }
+
+                    //check password
+                    if (binding.inputPassword.text.toString() != isVisible.password) {
+                        binding.inputPassword.setText(isVisible.password)
+                    }
+                }
             }
-            else {
-                binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeclose)
+        }
+    }
+
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    //navigationRegister
+                    is LoginEvent.NavigationRegister -> {
+                        findNavController().navigate(R.id.layout3)
+                    }
+
+                    //navigationForGot
+                    is LoginEvent.NavigationForgot -> {
+                        findNavController().navigate(R.id.layout4)
+                    }
+                }
             }
-
-            binding.inputPassword.setSelection(binding.inputPassword.length())
-
-
-            //navigationRegister
-            if (isVisible.navigationRegister) {
-                findNavController().navigate(R.id.layout3)
-                viewModel.doneRegister()
-            }
-
-
-            //navigationForGot
-            if (isVisible.navigationForgot) {
-                findNavController().navigate(R.id.layout4)
-                viewModel.doneForgot()
-            }
-
-
-            //check email
-            if (binding.inputEmail.text.toString() != isVisible.email) {
-                binding.inputEmail.setText(isVisible.email)
-            }
-
-            //check password
-            if (binding.inputPassword.text.toString() != isVisible.password) {
-                binding.inputPassword.setText(isVisible.password)
-            }
-
         }
     }
 

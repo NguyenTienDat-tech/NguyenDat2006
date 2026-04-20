@@ -1,57 +1,56 @@
 package com.example.openningscreen.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.presentation.event.ResetEvent
 import com.example.openningscreen.presentation.state.ResetUiState
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class ResetViewModel : ViewModel() {
-    private val _uiState = MutableLiveData(ResetUiState())
-    val uiState: LiveData<ResetUiState> = _uiState
+    //stateFlow
+    private val _uiState = MutableStateFlow(ResetUiState())
+    val uiState = _uiState.asStateFlow()
+
+    //event
+    private val _event = MutableSharedFlow<ResetEvent>()
+    val event = _event.asSharedFlow()
 
     //changePassword
     fun changePassword() {
-        val current = _uiState.value ?: return //trạng thái hiện tại
-        _uiState.value = current.copy(isPasswordVisible = !current.isPasswordVisible)
+        _uiState.value = _uiState.value.copy(isPasswordVisible = !_uiState.value.isPasswordVisible)
     }
 
     //changePassword1
     fun changePassword1() {
-        val current = _uiState.value ?: return //trạng thái hiện tại
-        _uiState.value = current.copy(isPasswordVisible1 = !current.isPasswordVisible1)
+        _uiState.value = _uiState.value.copy(isPasswordVisible1 = !_uiState.value.isPasswordVisible1)
     }
 
     //navigationSuccesspassword
     fun successClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationSuccess = true)
-    }
-
-    fun doneSuccess() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationSuccess = false)
+        viewModelScope.launch {
+            _event.emit(ResetEvent.NavigationSuccess)
+        }
     }
 
     //navigationOTP
     fun otpClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationOTP = true)
+        viewModelScope.launch {
+            _event.emit(ResetEvent.NavigationOTP)
+        }
     }
 
-    fun doneOtp() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationOTP = false)
-    }
 
     //inputPassword
     fun onPasswordChange(password: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(password = password)
+        _uiState.value = _uiState.value.copy(password = password)
     }
 
     //inputPassword1
     fun onPasswordChange1(password1: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(password1 = password1)
+        _uiState.value = _uiState.value.copy(password1 = password1)
     }
 }

@@ -9,10 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentResetpasswordBinding
+import com.example.openningscreen.presentation.event.ResetEvent
 import com.example.openningscreen.presentation.viewmodel.ResetViewModel
+import kotlinx.coroutines.launch
 
 
 class ResetPasswordFragment : Fragment() {
@@ -33,7 +38,8 @@ class ResetPasswordFragment : Fragment() {
         binding = FragmentResetpasswordBinding.bind(view)
 
         setOnCLick()
-        obseverData()
+        stateData()
+        eventData()
     }
 
     private fun setOnCLick() {
@@ -62,55 +68,62 @@ class ResetPasswordFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //isPassword
-            if (isVisible.isPasswordVisible) {
-                binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeopen)
+    private fun stateData() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { isVisible ->
+                    //isPassword
+                    if (isVisible.isPasswordVisible) {
+                        binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeopen)
+                    }
+                    else {
+                        binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeclose)
+                    }
+
+                    binding.inputPassword.setSelection(binding.inputPassword.length())
+
+
+                    //isPassword1
+                    if (isVisible.isPasswordVisible1) {
+                        binding.inputPassword1.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        binding.eye1.setImageResource(R.drawable.eyeopen)
+                    }
+                    else {
+                        binding.inputPassword1.transformationMethod = PasswordTransformationMethod.getInstance()
+                        binding.eye1.setImageResource(R.drawable.eyeclose)
+                    }
+
+                    binding.inputPassword1.setSelection(binding.inputPassword1.length())
+
+
+                    //check password
+                    if (binding.inputPassword.text.toString() != isVisible.password) {
+                        binding.inputPassword.setText(isVisible.password)
+                    }
+
+                    //check password1
+                    if (binding.inputPassword1.text.toString() != isVisible.password1) {
+                        binding.inputPassword1.setText(isVisible.password1)
+                    }
+                }
             }
-            else {
-                binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeclose)
-            }
+        }
+    }
 
-            binding.inputPassword.setSelection(binding.inputPassword.length())
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is ResetEvent.NavigationOTP -> {
+                        findNavController().navigate(R.id.layout5)
+                    }
 
-
-            //isPassword1
-            if (isVisible.isPasswordVisible1) {
-                binding.inputPassword1.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.eye1.setImageResource(R.drawable.eyeopen)
-            }
-            else {
-                binding.inputPassword1.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding.eye1.setImageResource(R.drawable.eyeclose)
-            }
-
-            binding.inputPassword1.setSelection(binding.inputPassword1.length())
-
-
-            //NavigationOTP
-            if (isVisible.navigationOTP) {
-                findNavController().navigate(R.id.layout5)
-                viewModel.doneOtp()
-            }
-
-
-            //NavigationResetSuccess
-            if (isVisible.navigationSuccess) {
-                findNavController().navigate(R.id.layout7)
-                viewModel.doneSuccess()
-            }
-
-            //check password
-            if (binding.inputPassword.text.toString() != isVisible.password) {
-                binding.inputPassword.setText(isVisible.password)
-            }
-
-            //check password1
-            if (binding.inputPassword1.text.toString() != isVisible.password1) {
-                binding.inputPassword1.setText(isVisible.password1)
+                    is ResetEvent.NavigationSuccess -> {
+                        findNavController().navigate(R.id.layout7)
+                    }
+                }
             }
         }
     }

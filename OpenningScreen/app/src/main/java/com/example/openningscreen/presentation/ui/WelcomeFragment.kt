@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentWelcomeBinding
+import com.example.openningscreen.presentation.event.WelcomeEvent
 import com.example.openningscreen.presentation.viewmodel.WelcomeViewModel
+import kotlinx.coroutines.launch
 import kotlin.getValue
 
 
@@ -31,7 +34,7 @@ class WelcomeFragment : Fragment() {
         binding = FragmentWelcomeBinding.bind(view)
 
         setOnClick()
-        obseverData()
+        eventData()
     }
 
     private fun setOnClick() {
@@ -43,18 +46,18 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //NavigationLogin
-            if (isVisible.navigationLogin) {
-                findNavController().navigate(R.id.layout2)
-                viewModel.doneLogin()
-            }
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is WelcomeEvent.NavigationLogin -> {
+                        findNavController().navigate(R.id.layout2)
+                    }
 
-            //NavigationRegister
-            if (isVisible.navigationRegister) {
-                findNavController().navigate(R.id.layout3)
-                viewModel.doneRegister()
+                    is WelcomeEvent.NavigationRegister -> {
+                        findNavController().navigate(R.id.layout3)
+                    }
+                }
             }
         }
     }

@@ -1,52 +1,54 @@
 package com.example.openningscreen.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.presentation.event.LoginEvent
 import com.example.openningscreen.presentation.state.LoginUiState
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class LoginViewModel: ViewModel() {
-    private val _uiState = MutableLiveData(LoginUiState())
-    val uiState: LiveData<LoginUiState> = _uiState
+    //StateFlow
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState = _uiState.asStateFlow()
+
+    //Event
+    private val _event = MutableSharedFlow<LoginEvent>()
+    val event = _event.asSharedFlow()
+
 
     //changePassword
     fun changePassword() {
-        val current = _uiState.value ?: return //trạng thái hiện tại
-        _uiState.value = current.copy(isPasswordVisible = !current.isPasswordVisible)
+        _uiState.value = _uiState.value.copy(isPasswordVisible = !_uiState.value.isPasswordVisible)
     }
 
     //navigationRegister
     fun registerClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationRegister = true)
+        viewModelScope.launch {
+            _event.emit(LoginEvent.NavigationRegister)
+        }
     }
 
-    fun doneRegister() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationRegister = false)
-    }
 
     //navigationForgot
     fun forgotCLick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationForgot = true)
+        viewModelScope.launch {
+            _event.emit(LoginEvent.NavigationForgot)
+        }
     }
 
-    fun doneForgot() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationForgot = false)
-    }
 
     //InputEmail
     fun onEmailChange(email: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(email = email)
+        _uiState.value = _uiState.value.copy(email = email)
     }
 
     //InputPassword
     fun onPasswordChange(password: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(password = password)
+        _uiState.value = _uiState.value.copy(password = password)
     }
 
 }

@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentResetsuccessBinding
+import com.example.openningscreen.presentation.event.RegisterEvent
+import com.example.openningscreen.presentation.event.ResetEvent
 import com.example.openningscreen.presentation.viewmodel.SuccessViewModel
+import kotlinx.coroutines.launch
 
 class ResetSuccessFragment : Fragment() {
     private lateinit var binding: FragmentResetsuccessBinding
@@ -29,7 +33,7 @@ class ResetSuccessFragment : Fragment() {
         binding = FragmentResetsuccessBinding.bind(view)
 
         setOnCLick()
-        obseverData()
+        eventData()
     }
 
     private fun setOnCLick() {
@@ -38,12 +42,14 @@ class ResetSuccessFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        //NavigationLogin
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            if (isVisible.navigationLogin) {
-                findNavController().navigate(R.id.layout7_layout2)
-                viewModel.doneLogin()
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is RegisterEvent.NavigationLogin -> {
+                        findNavController().navigate(R.id.layout7_layout2)
+                    }
+                }
             }
         }
     }

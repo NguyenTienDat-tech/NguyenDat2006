@@ -3,29 +3,28 @@ package com.example.openningscreen.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.presentation.event.WelcomeEvent
 import com.example.openningscreen.presentation.state.WelcomeUiState
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class WelcomeViewModel : ViewModel() {
-    private val _uiState = MutableLiveData(WelcomeUiState())
-    val uiState: LiveData<WelcomeUiState> = _uiState
+    private val _event = MutableSharedFlow<WelcomeEvent>()
+    val event = _event.asSharedFlow()
 
     fun loginClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationLogin = true)
+        viewModelScope.launch {
+            _event.emit(WelcomeEvent.NavigationLogin)
+        }
     }
 
-    fun doneLogin() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationLogin = false)
-    }
 
     fun registerClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationRegister = true)
+        viewModelScope.launch {
+            _event.emit(WelcomeEvent.NavigationRegister)
+        }
     }
 
-    fun doneRegister() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationRegister = false)
-    }
 }

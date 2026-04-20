@@ -9,10 +9,15 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentRegisterBinding
+import com.example.openningscreen.presentation.event.RegisterEvent
 import com.example.openningscreen.presentation.viewmodel.RegisterViewModel
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
@@ -32,7 +37,8 @@ class RegisterFragment : Fragment() {
         binding = FragmentRegisterBinding.bind(view)
 
         setOnCLick()
-        obseverData()
+        stateData()
+        eventData()
     }
 
     private fun setOnCLick() {
@@ -57,41 +63,50 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //isPassword
-            if (isVisible.isPasswordVisible) {
-                binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeopen)
+    private fun stateData() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { isVisible ->
+                    //isPassword
+                    if (isVisible.isPasswordVisible) {
+                        binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeopen)
+                    }
+                    else {
+                        binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                        binding.eye.setImageResource(R.drawable.eyeclose)
+                    }
+
+                    binding.inputPassword.setSelection(binding.inputPassword.length())
+
+                    //check Name
+                    if (binding.inputName.text.toString() != isVisible.name) {
+                        binding.inputName.setText(isVisible.name)
+                    }
+
+                    //check email
+                    if (binding.inputEmail.text.toString() != isVisible.email) {
+                        binding.inputEmail.setText(isVisible.email)
+                    }
+
+                    //check password
+                    if (binding.inputPassword.text.toString() != isVisible.password) {
+                        binding.inputPassword.setText(isVisible.password)
+                    }
+                }
             }
-            else {
-                binding.inputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-                binding.eye.setImageResource(R.drawable.eyeclose)
-            }
+        }
+    }
 
-            binding.inputPassword.setSelection(binding.inputPassword.length())
-
-
-            //navigationLogin
-            if (isVisible.navigationLogin) {
-                findNavController().navigate(R.id.layout2)
-                viewModel.doneLogin()
-            }
-
-
-            //check Name
-            if (binding.inputName.text.toString() != isVisible.name) {
-                binding.inputName.setText(isVisible.name)
-            }
-
-            //check email
-            if (binding.inputEmail.text.toString() != isVisible.email) {
-                binding.inputEmail.setText(isVisible.email)
-            }
-
-            //check password
-            if (binding.inputPassword.text.toString() != isVisible.password) {
-                binding.inputPassword.setText(isVisible.password)
+    private fun eventData() {
+        //navigationLogin
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is RegisterEvent.NavigationLogin -> {
+                        findNavController().navigate(R.id.layout2)
+                    }
+                }
             }
         }
     }

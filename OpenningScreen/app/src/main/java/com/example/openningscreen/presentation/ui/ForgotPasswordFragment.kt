@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentForgotpasswordBinding
+import com.example.openningscreen.presentation.event.ForgotEvent
 import com.example.openningscreen.presentation.viewmodel.ForgotViewModel
+import kotlinx.coroutines.launch
 
 
 class ForgotPasswordFragment : Fragment() {
@@ -30,7 +33,7 @@ class ForgotPasswordFragment : Fragment() {
         binding = FragmentForgotpasswordBinding.bind(view)
 
         setOnClick()
-        obseverData()
+        eventData()
     }
 
     private fun setOnClick() {
@@ -43,18 +46,18 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //navigationOTP
-            if (isVisible.navigationOTP) {
-                findNavController().navigate(R.id.layout5)
-                viewModel.doneOTP()
-            }
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is ForgotEvent.NavigationOTP -> {
+                        findNavController().navigate(R.id.layout5)
+                    }
 
-            //navigationLogin
-            if (isVisible.navigationLogin) {
-                findNavController().navigate(R.id.layout2)
-                viewModel.doneLogin()
+                    is ForgotEvent.NavigationLogin -> {
+                        findNavController().navigate(R.id.layout2)
+                    }
+                }
             }
         }
     }

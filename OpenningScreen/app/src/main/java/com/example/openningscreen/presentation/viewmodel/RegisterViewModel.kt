@@ -1,47 +1,49 @@
 package com.example.openningscreen.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.presentation.event.RegisterEvent
 import com.example.openningscreen.presentation.state.RegisterUiState
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {
-    private val _uiState = MutableLiveData(RegisterUiState())
-    val uiState: LiveData<RegisterUiState> = _uiState
+    //stateFlow
+    private val _uiState = MutableStateFlow(RegisterUiState())
+    val uiState = _uiState.asStateFlow()
+
+    //eventFlow
+    private val _event = MutableSharedFlow<RegisterEvent>()
+    val event = _event.asSharedFlow()
 
 
     //changePassword
     fun changePassword() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(isPasswordVisible = !current.isPasswordVisible)
+        _uiState.value = _uiState.value.copy(isPasswordVisible = !_uiState.value.isPasswordVisible)
     }
 
     //navigationLogin
     fun loginClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationLogin = true)
-    }
-
-    fun doneLogin() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationLogin = false)
+        viewModelScope.launch {
+            _event.emit(RegisterEvent.NavigationLogin)
+        }
     }
 
     //inputName
     fun onNameChange(name: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(name = name)
+        _uiState.value = _uiState.value.copy(name = name)
     }
 
     //inputEmail
     fun onEmailChange(email: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(email = email)
+        _uiState.value = _uiState.value.copy(email = email)
     }
 
     //inputPassword
     fun onPasswordChange(password: String) {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(password = password)
+        _uiState.value = _uiState.value.copy(password = password)
     }
 }

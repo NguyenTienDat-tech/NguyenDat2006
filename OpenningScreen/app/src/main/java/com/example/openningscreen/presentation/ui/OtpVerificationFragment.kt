@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentOtpverificationBinding
+import com.example.openningscreen.presentation.event.OtpEvent
 import com.example.openningscreen.presentation.viewmodel.OtpViewModel
+import kotlinx.coroutines.launch
 
 
 class OtpVerificationFragment : Fragment() {
@@ -30,7 +33,7 @@ class OtpVerificationFragment : Fragment() {
         binding = FragmentOtpverificationBinding.bind(view)
 
         setOnCLick()
-        obseverData()
+        eventData()
     }
 
     private fun setOnCLick() {
@@ -43,18 +46,18 @@ class OtpVerificationFragment : Fragment() {
         }
     }
 
-    private fun obseverData() {
-        viewModel.uiState.observe(viewLifecycleOwner) { isVisible ->
-            //navigationForgot
-            if (isVisible.navigationForgot) {
-                findNavController().navigate(R.id.layout4)
-                viewModel.doneForgot()
-            }
+    private fun eventData() {
+        lifecycleScope.launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is OtpEvent.NavigationForgot -> {
+                        findNavController().navigate(R.id.layout4)
+                    }
 
-            //navigationReset
-            if (isVisible.navigationReset) {
-                findNavController().navigate(R.id.layout6)
-                viewModel.doneReset()
+                    is OtpEvent.NavigationReset -> {
+                        findNavController().navigate(R.id.layout6)
+                    }
+                }
             }
         }
     }

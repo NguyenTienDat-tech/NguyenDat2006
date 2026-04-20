@@ -1,33 +1,30 @@
 package com.example.openningscreen.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.openningscreen.presentation.state.OtpUiState
+import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.presentation.event.OtpEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class OtpViewModel : ViewModel() {
-    private val _uiState = MutableLiveData(OtpUiState())
-    val uiState: LiveData<OtpUiState> = _uiState
+    //event
+    private val _event = MutableSharedFlow<OtpEvent>()
+    val event = _event.asSharedFlow()
 
     //navigationForgot
     fun forgotClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationForgot = true)
+        viewModelScope.launch {
+            _event.emit(OtpEvent.NavigationForgot)
+        }
     }
 
-    fun doneForgot() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationForgot = false)
-    }
 
     //navigationReset
     fun resetClick() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationReset = true)
+        viewModelScope.launch {
+            _event.emit(OtpEvent.NavigationReset)
+        }
     }
 
-    fun doneReset() {
-        val current = _uiState.value ?: return
-        _uiState.value = current.copy(navigationReset = false)
-    }
 }
