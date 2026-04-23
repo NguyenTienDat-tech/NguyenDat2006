@@ -137,6 +137,16 @@ class LoginFragment : Fragment() {
                     is LoginEvent.Error -> {
                         Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
                     }
+
+                    //checkEmail
+                    is LoginEvent.CheckEmail -> {
+                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
+                    }
+
+                    //check null
+                    is LoginEvent.Null -> {
+                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

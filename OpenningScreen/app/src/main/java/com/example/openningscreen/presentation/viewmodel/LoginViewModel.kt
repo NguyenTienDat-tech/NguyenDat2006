@@ -45,14 +45,6 @@ class LoginViewModel(
         }
     }
 
-    //navigationHome
-    fun homeClick() {
-        viewModelScope.launch {
-            _event.emit(LoginEvent.NavigationHome)
-        }
-    }
-
-
     //InputEmail
     fun onEmailChange(email: String) {
         _uiState.value = _uiState.value.copy(email = email)
@@ -66,16 +58,25 @@ class LoginViewModel(
     //đăng nhập login
     fun onLoginClick() {
         viewModelScope.launch {
+            val email = _uiState.value.email.trim()
+            val password = _uiState.value.password.trim()
 
+            //check trùng
             val success = repository.login(_uiState.value.email.trim(), _uiState.value.password.trim())
 
-            if (success) {
+            //check email, pasword
+            if (email.isEmpty() || password.isEmpty()) {
+            _event.emit(LoginEvent.Null("Vui lòng nhập đầy đủ thông tin"))
+            }
+            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                _event.emit(LoginEvent.CheckEmail("Nhập không đúng email. Nhập lại!"))
+            }
+            else if (success){
                 _event.emit(LoginEvent.NavigationHome)
             }
             else {
-                _event.emit(LoginEvent.Error("Tai khoan khong ton tai!"))
+                _event.emit(LoginEvent.Error("Tài khoản không tồn tại"))
             }
-
         }
     }
 

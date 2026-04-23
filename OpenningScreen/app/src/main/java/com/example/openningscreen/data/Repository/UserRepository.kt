@@ -11,4 +11,16 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun insertUser(userEntity: UserEntity) {
         return userDao.insertUser(userEntity)
     }
+
+    suspend fun email(userEntity: UserEntity): Boolean {
+        val check = userDao.checkEmail(userEntity.email)
+
+        return if (check == null) {
+            true
+        }
+        else {
+            false
+        }
+
+    }
 }

@@ -12,6 +12,7 @@ import com.example.openningscreen.R
 import com.example.openningscreen.databinding.FragmentResetsuccessBinding
 import com.example.openningscreen.presentation.event.RegisterEvent
 import com.example.openningscreen.presentation.event.ResetEvent
+import com.example.openningscreen.presentation.event.SuccessEvent
 import com.example.openningscreen.presentation.viewmodel.SuccessViewModel
 import kotlinx.coroutines.launch
 
@@ -46,7 +47,7 @@ class ResetSuccessFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.event.collect { event ->
                 when (event) {
-                    is RegisterEvent.NavigationLogin -> {
+                    is SuccessEvent.NavigationLogin -> {
                         findNavController().navigate(R.id.layout7_layout2)
                     }
 
