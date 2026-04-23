@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,15 +14,29 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.openningscreen.R
+import com.example.openningscreen.data.Database.AppDatabase
+import com.example.openningscreen.data.Repository.UserRepository
 import com.example.openningscreen.databinding.FragmentRegisterBinding
 import com.example.openningscreen.presentation.event.RegisterEvent
 import com.example.openningscreen.presentation.viewmodel.RegisterViewModel
+import com.example.openningscreen.presentation.viewmodelFactory.RegistoryViewModelFactory
 import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels() {
+        RegistoryViewModelFactory(
+            UserRepository(
+                Room.databaseBuilder(
+                    requireContext(),
+                    AppDatabase::class.java,
+                    "app_db"
+                ).build().userDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +75,10 @@ class RegisterFragment : Fragment() {
 
         binding.inputPassword.addTextChangedListener {
             viewModel.onPasswordChange(it.toString())
+        }
+
+        binding.login.setOnClickListener {
+            viewModel.onRegisterClick()
         }
     }
 
@@ -106,6 +125,7 @@ class RegisterFragment : Fragment() {
                     is RegisterEvent.NavigationLogin -> {
                         findNavController().navigate(R.id.layout2)
                     }
+
                 }
             }
         }

@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,15 +14,30 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.openningscreen.R
+import com.example.openningscreen.data.Database.AppDatabase
+import com.example.openningscreen.data.Repository.UserRepository
 import com.example.openningscreen.databinding.FragmentLoginBinding
 import com.example.openningscreen.presentation.event.LoginEvent
 import com.example.openningscreen.presentation.viewmodel.LoginViewModel
+import com.example.openningscreen.presentation.viewmodelFactory.LoginViewModelFactory
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory(
+            UserRepository(
+                Room.databaseBuilder(
+                    requireContext(),
+                    AppDatabase::class.java,
+                    "app_db"
+                ).build().userDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +78,9 @@ class LoginFragment : Fragment() {
             viewModel.onPasswordChange(it.toString())
         }
 
+        binding.login.setOnClickListener {
+            viewModel.onLoginClick()
+        }
     }
 
     private fun stateData() {
@@ -107,6 +126,16 @@ class LoginFragment : Fragment() {
                     //navigationForGot
                     is LoginEvent.NavigationForgot -> {
                         findNavController().navigate(R.id.layout4)
+                    }
+
+                    //navigationHome
+                    is LoginEvent.NavigationHome -> {
+                        findNavController().navigate(R.id.layout1)
+                    }
+
+                    //Error
+                    is LoginEvent.Error -> {
+                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

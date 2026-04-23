@@ -4,4 +4,5 @@ data class LoginUiState (
     val isPasswordVisible: Boolean = false,
     val email: String = "",
     val password: String = "",
+
 )

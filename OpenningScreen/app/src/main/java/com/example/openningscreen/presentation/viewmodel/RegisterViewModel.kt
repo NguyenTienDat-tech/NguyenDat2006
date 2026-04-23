@@ -2,6 +2,8 @@ package com.example.openningscreen.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.openningscreen.data.Entity.UserEntity
+import com.example.openningscreen.data.Repository.UserRepository
 import com.example.openningscreen.presentation.event.RegisterEvent
 import com.example.openningscreen.presentation.state.RegisterUiState
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -10,7 +12,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(
+    private val repository: UserRepository
+) : ViewModel() {
     //stateFlow
     private val _uiState = MutableStateFlow(RegisterUiState())
     val uiState = _uiState.asStateFlow()
@@ -45,5 +49,15 @@ class RegisterViewModel : ViewModel() {
     //inputPassword
     fun onPasswordChange(password: String) {
         _uiState.value = _uiState.value.copy(password = password)
+    }
+
+    //đăng kí tk
+    fun onRegisterClick() {
+        viewModelScope.launch {
+            val user = UserEntity(email = _uiState.value.email, password = _uiState.value.password)
+            val success = repository.insertUser(user)
+
+            _event.emit(RegisterEvent.NavigationLogin)
+        }
     }
 }

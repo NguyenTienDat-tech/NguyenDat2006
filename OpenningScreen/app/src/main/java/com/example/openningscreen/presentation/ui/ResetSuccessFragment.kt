@@ -49,6 +49,7 @@ class ResetSuccessFragment : Fragment() {
                     is RegisterEvent.NavigationLogin -> {
                         findNavController().navigate(R.id.layout7_layout2)
                     }
+
                 }
             }
         }
