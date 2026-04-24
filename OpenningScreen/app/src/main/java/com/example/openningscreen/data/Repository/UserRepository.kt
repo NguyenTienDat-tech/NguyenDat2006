@@ -1,7 +1,7 @@
-package com.example.openningscreen.data.Repository
+package com.example.openningscreen.data.repository
 
-import com.example.openningscreen.data.DAO.UserDao
-import com.example.openningscreen.data.Entity.UserEntity
+import com.example.openningscreen.data.local.dao.UserDao
+import com.example.openningscreen.data.local.entity.UserEntity
 
 class UserRepository(private val userDao: UserDao) {
     suspend fun login(email: String, password: String): Boolean {

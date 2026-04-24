@@ -13,7 +13,7 @@
         android:theme="@style/Theme.OpenningScreen"
         android:name="com.example.openningscreen.data.Database.MyApp">
         <activity
-            android:name=".presentation.ui.MainActivity"
+            android:name=".ui.screen.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
