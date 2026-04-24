@@ -38,7 +38,6 @@
         android:id="@+id/layout7"
         android:name="com.example.openningscreen.ui.screen.success.ResetSuccessFragment"
         android:label="ResetSuccess">
-
         <action
             android:id="@+id/layout7_layout2"
             app:destination="@id/layout2"
