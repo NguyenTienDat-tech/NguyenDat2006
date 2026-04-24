@@ -21,6 +21,15 @@ class UserRepository(private val userDao: UserDao) {
         else {
             false
         }
-
     }
+
+    suspend fun checkEmail(email: String): Boolean {
+        return userDao.checkEmail(email) != null
+    }
+
+    suspend fun updatePassword(email: String, password: String) {
+        return userDao.updatePassword(email, password)
+    }
+
+
 }

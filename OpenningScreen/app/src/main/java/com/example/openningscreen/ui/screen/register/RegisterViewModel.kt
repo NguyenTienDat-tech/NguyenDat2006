@@ -64,16 +64,20 @@ class RegisterViewModel(
             //check email, password
             if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
             _event.emit(RegisterEvent.Null("Vui lòng nhập đầy đủ thông tin"))
+                return@launch
             }
             else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                _event.emit(RegisterEvent.CheckEmail("Nhập không đúng email. Nhập lại!"))
+                _event.emit(RegisterEvent.Null("Nhập không đúng email. Nhập lại!"))
+                return@launch
             }
             else if (check) {
                 repository.insertUser(user)
                 _event.emit(RegisterEvent.NavigationLogin)
+                return@launch
             }
             else {
-                _event.emit(RegisterEvent.Error("Email da ton tai!"))
+                _event.emit(RegisterEvent.Null("Email da ton tai!"))
+                return@launch
             }
 
         }

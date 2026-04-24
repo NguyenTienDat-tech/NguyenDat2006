@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,13 +14,27 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.openningscreen.R
+import com.example.openningscreen.data.local.database.AppDatabase
+import com.example.openningscreen.data.repository.UserRepository
 import com.example.openningscreen.databinding.FragmentResetpasswordBinding
+import com.example.openningscreen.ui.screen.register.RegistoryViewModelFactory
 import kotlinx.coroutines.launch
 
 class ResetPasswordFragment : Fragment() {
     private lateinit var binding: FragmentResetpasswordBinding
-    private val viewModel: ResetViewModel by viewModels()
+    private val viewModel: ResetViewModel by viewModels() {
+        ResetViewModelFactory(
+            UserRepository(
+                Room.databaseBuilder(
+                    requireContext(),
+                    AppDatabase::class.java,
+                    "app_db"
+                ).build().userDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +77,10 @@ class ResetPasswordFragment : Fragment() {
 
         binding.inputPassword1.addTextChangedListener {
             viewModel.onPasswordChange1(it.toString())
+        }
+
+        binding.resetPassword.setOnClickListener {
+            viewModel.onResetClick()
         }
     }
 
@@ -119,6 +138,10 @@ class ResetPasswordFragment : Fragment() {
 
                     is ResetEvent.NavigationSuccess -> {
                         findNavController().navigate(R.id.layout7)
+                    }
+
+                    is ResetEvent.Null -> {
+                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

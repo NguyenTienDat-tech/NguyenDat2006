@@ -15,4 +15,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
     suspend fun checkEmail(email: String): UserEntity?
+
+    @Query("UPDATE users SET password = :password WHERE email = :email")
+    suspend fun updatePassword(email: String, password: String)
 }

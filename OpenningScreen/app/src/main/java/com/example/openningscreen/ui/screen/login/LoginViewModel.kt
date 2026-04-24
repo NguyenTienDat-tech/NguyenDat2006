@@ -64,16 +64,20 @@ class LoginViewModel(
 
             //check email, pasword
             if (email.isEmpty() || password.isEmpty()) {
-            _event.emit(LoginEvent.Null("Vui lòng nhập đầy đủ thông tin"))
+                _event.emit(LoginEvent.Null("Vui lòng nhập đầy đủ thông tin"))
+                return@launch
             }
             else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                _event.emit(LoginEvent.CheckEmail("Nhập không đúng email. Nhập lại!"))
+                _event.emit(LoginEvent.Null("Nhập không đúng email. Nhập lại!"))
+                return@launch
             }
             else if (success){
                 _event.emit(LoginEvent.NavigationHome)
+                return@launch
             }
             else {
-                _event.emit(LoginEvent.Error("Tài khoản không tồn tại"))
+                _event.emit(LoginEvent.Null("Tài khoản không tồn tại"))
+                return@launch
             }
         }
     }

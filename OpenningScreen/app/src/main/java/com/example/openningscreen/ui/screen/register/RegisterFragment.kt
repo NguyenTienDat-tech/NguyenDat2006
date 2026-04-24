@@ -123,14 +123,6 @@ class RegisterFragment : Fragment() {
                         findNavController().navigate(R.id.layout2)
                     }
 
-                    is RegisterEvent.Error -> {
-                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
-                    }
-
-                    is RegisterEvent.CheckEmail -> {
-                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
-                    }
-
                     is RegisterEvent.Null -> {
                         Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
                     }

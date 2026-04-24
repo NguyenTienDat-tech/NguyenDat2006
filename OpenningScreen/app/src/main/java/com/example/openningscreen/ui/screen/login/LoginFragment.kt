@@ -130,15 +130,7 @@ class LoginFragment : Fragment() {
                         findNavController().navigate(R.id.layout1)
                     }
 
-                    //Error
-                    is LoginEvent.Error -> {
-                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
-                    }
 
-                    //checkEmail
-                    is LoginEvent.CheckEmail -> {
-                        Toast.makeText(requireContext(), event.text, Toast.LENGTH_SHORT).show()
-                    }
 
                     //check null
                     is LoginEvent.Null -> {
