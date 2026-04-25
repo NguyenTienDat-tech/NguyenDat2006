@@ -5,4 +5,5 @@ sealed class ForgotEvent {
     object NavigationLogin: ForgotEvent()
 
     data class Null(val text: String): ForgotEvent()
+    data class NavigationReset(val email: String): ForgotEvent()
 }

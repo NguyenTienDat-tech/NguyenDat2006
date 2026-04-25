@@ -52,9 +52,9 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun setOnClick() {
-        binding.sendCode.setOnClickListener {
-            viewModel.otpClick()
-        }
+//        binding.sendCode.setOnClickListener {
+//            viewModel.otpClick()
+//        }
 
         binding.vector.setOnClickListener {
             viewModel.loginClick()
@@ -86,6 +86,15 @@ class ForgotPasswordFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.event.collect { event ->
                 when (event) {
+                    is ForgotEvent.NavigationReset -> {
+                        findNavController().navigate(
+                            R.id.layout6,
+                            Bundle().apply {
+                                putString("email", event.email)
+                            }
+                        )
+                    }
+
                     is ForgotEvent.NavigationOTP -> {
                         findNavController().navigate(R.id.layout5)
                     }

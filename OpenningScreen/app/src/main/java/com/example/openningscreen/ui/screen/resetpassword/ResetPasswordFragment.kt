@@ -80,7 +80,8 @@ class ResetPasswordFragment : Fragment() {
         }
 
         binding.resetPassword.setOnClickListener {
-            viewModel.onResetClick()
+            val email = arguments?.getString("email") ?: ""
+            viewModel.onResetClick(email)
         }
     }
 

@@ -62,7 +62,7 @@ class ForgotViewModel(
             }
 
             else if (exitEmail) {
-                _event.emit(ForgotEvent.NavigationOTP)
+                _event.emit(ForgotEvent.NavigationReset(email))
                 return@launch
             }
             else {
