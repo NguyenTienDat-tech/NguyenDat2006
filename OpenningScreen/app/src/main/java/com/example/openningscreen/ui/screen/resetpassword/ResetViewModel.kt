@@ -64,8 +64,6 @@ class ResetViewModel(
             val password = _uiState.value.password.trim()
             val password1 = _uiState.value.password1.trim()
 
-
-
             //check email, password
             if (password.isEmpty() || password1.isEmpty()) {
                 _event.emit(ResetEvent.Null("Vui lòng nhập đầy đủ thông tin"))

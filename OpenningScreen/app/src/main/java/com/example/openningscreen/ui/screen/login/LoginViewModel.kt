@@ -59,8 +59,6 @@ class LoginViewModel(
             val email = _uiState.value.email.trim()
             val password = _uiState.value.password.trim()
 
-            //check trùng
-            val success = repository.login(_uiState.value.email.trim(), _uiState.value.password.trim())
 
             //check email, pasword
             if (email.isEmpty() || password.isEmpty()) {
@@ -71,7 +69,11 @@ class LoginViewModel(
                 _event.emit(LoginEvent.Null("Nhập không đúng email. Nhập lại!"))
                 return@launch
             }
-            else if (success){
+
+            //check trùng
+            val success = repository.login(email, password)
+
+            if (success){
                 _event.emit(LoginEvent.NavigationHome)
                 return@launch
             }

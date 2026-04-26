@@ -57,10 +57,6 @@ class RegisterViewModel(
             val password = _uiState.value.password.trim()
             val name = _uiState.value.password.trim()
 
-            //check trùng
-            val user = UserEntity(email = _uiState.value.email, password = _uiState.value.password)
-            val check = repository.email(user)
-
             //check email, password
             if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
             _event.emit(RegisterEvent.Null("Vui lòng nhập đầy đủ thông tin"))
@@ -70,7 +66,12 @@ class RegisterViewModel(
                 _event.emit(RegisterEvent.Null("Nhập không đúng email. Nhập lại!"))
                 return@launch
             }
-            else if (check) {
+
+            //check trùng
+            val user = UserEntity(email = email, password = password)
+            val check = repository.email(user)
+
+            if (check) {
                 repository.insertUser(user)
                 _event.emit(RegisterEvent.NavigationLogin)
                 return@launch

@@ -49,8 +49,6 @@ class ForgotViewModel(
         viewModelScope.launch {
             val email = _uiState.value.email.trim()
 
-            val exitEmail = repository.checkEmail(email)
-
             if (email.isEmpty()) {
                 _event.emit(ForgotEvent.Null("Vui lòng nhập đầy đủ thông tin"))
                 return@launch
@@ -61,7 +59,9 @@ class ForgotViewModel(
                 return@launch
             }
 
-            else if (exitEmail) {
+            val exitEmail = repository.checkEmail(email)
+
+            if (exitEmail) {
                 _event.emit(ForgotEvent.NavigationReset(email))
                 return@launch
             }
