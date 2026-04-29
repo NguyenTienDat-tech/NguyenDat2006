@@ -6,15 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.example.openningscreen.R
+import com.example.openningscreen.data.local.database.AppDatabase
+import com.example.openningscreen.data.repository.UserRepository
 import com.example.openningscreen.databinding.FragmentOtpverificationBinding
 import kotlinx.coroutines.launch
 
 class OtpVerificationFragment : Fragment() {
     private lateinit var binding: FragmentOtpverificationBinding
-    private val viewModel: OtpViewModel by viewModels()
+    private val viewModel: OtpViewModel by viewModels() {
+        OTPViewModelFactory(
+            UserRepository(
+                Room.databaseBuilder(
+                    requireContext(),
+                    AppDatabase::class.java,
+                    "app_db"
+                ).build().userDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +49,8 @@ class OtpVerificationFragment : Fragment() {
 
     private fun setOnCLick() {
         binding.verify.setOnClickListener {
-            viewModel.resetClick()
+            val email = arguments?.getString("email") ?: ""
+            viewModel.resetClick(email)
         }
 
         binding.vector.setOnClickListener {
@@ -53,6 +68,15 @@ class OtpVerificationFragment : Fragment() {
 
                     is OtpEvent.NavigationReset -> {
                         findNavController().navigate(R.id.layout6)
+                    }
+
+                    is OtpEvent.NavigationResetSendEmail -> {
+                        findNavController().navigate(
+                            R.id.layout6,
+                            Bundle().apply {
+                                putString("email", event.email)
+                            }
+                        )
                     }
                 }
             }

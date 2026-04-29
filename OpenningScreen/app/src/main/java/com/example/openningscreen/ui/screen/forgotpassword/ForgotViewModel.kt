@@ -62,7 +62,7 @@ class ForgotViewModel(
             val exitEmail = repository.checkEmail(email)
 
             if (exitEmail) {
-                _event.emit(ForgotEvent.NavigationReset(email))
+                _event.emit(ForgotEvent.NavigationOTPSendEmail(email))
                 return@launch
             }
             else {

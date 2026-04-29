@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openningscreen.data.repository.UserRepository
+import com.example.openningscreen.data.sharedPreference.PrefsManager
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: UserRepository
+    private val repository: UserRepository,
+    private val prefs: PrefsManager
 ): ViewModel() {
     //StateFlow
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -21,6 +23,7 @@ class LoginViewModel(
     //Event
     private val _event = MutableSharedFlow<LoginEvent>()
     val event = _event.asSharedFlow()
+
 
 
     //changePassword
@@ -71,7 +74,9 @@ class LoginViewModel(
             }
 
             //check trùng
-            val success = repository.login(email, password)
+           val success = repository.login(email, password)
+
+            prefs.setLogin(success)
 
             if (success){
                 _event.emit(LoginEvent.NavigationHome)

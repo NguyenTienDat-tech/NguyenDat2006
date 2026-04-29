@@ -18,6 +18,7 @@ import androidx.room.Room
 import com.example.openningscreen.R
 import com.example.openningscreen.data.local.database.AppDatabase
 import com.example.openningscreen.data.repository.UserRepository
+import com.example.openningscreen.data.sharedPreference.PrefsManager
 import com.example.openningscreen.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
@@ -32,7 +33,8 @@ class LoginFragment : Fragment() {
                     AppDatabase::class.java,
                     "app_db"
                 ).build().userDao()
-            )
+            ),
+            PrefsManager(requireContext())
         )
     }
 
@@ -48,6 +50,12 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentLoginBinding.bind(view)
+
+//        val prefs = PrefsManager(requireContext())
+//        if (prefs.getLogin()) {
+//            findNavController().navigate(R.id.layout1)
+//            return
+//        }
 
         setOnClick()
         stateData()
