@@ -1,10 +1,12 @@
 package com.example.openningscreen.data.repository
 
 import android.util.Log
+import com.example.openningscreen.core.network.ApiResponse
 import com.example.openningscreen.data.remote.apiService.ApiService
 import com.example.openningscreen.data.remote.retrofitInstance.RetrofitInstance
 import com.example.openningscreen.ui.screen.forgotpassword.ForgotEvent
 import com.example.openningscreen.ui.screen.forgotpassword.requestAndResponse.ForgotRequest
+import com.example.openningscreen.ui.screen.forgotpassword.requestAndResponse.OtpData
 import com.example.openningscreen.ui.screen.login.requestAndResponse.LoginRequest
 import com.example.openningscreen.ui.screen.otp.requestAndResponse.OtpRequest
 import com.example.openningscreen.ui.screen.register.requestAndResponse.RegisterRequest
@@ -34,13 +36,15 @@ class UserRepository(
         }
     }
 
-    suspend fun forgot(email: String): Boolean {
+    suspend fun forgot(email: String): ApiResponse<OtpData> {
         return try {
             val response = apiService.forgot(ForgotRequest(email))
 
-            return response.success
+            Log.d("api", "otp=${response.data?.otp}")
+
+            return response
         } catch (e: Exception) {
-            false
+            ApiResponse(false, e.message ?:"Unknown error", null)
         }
     }
 

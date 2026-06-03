@@ -59,6 +59,26 @@ class OtpVerificationFragment : Fragment() {
     }
 
     private fun setupOtp() {
+        //Tự động nhảy sang ô tiếp theo
+        binding.input1.addTextChangedListener {
+            if (it?.length == 1) {
+                binding.input2.requestFocus()
+            }
+        }
+
+        binding.input2.addTextChangedListener {
+            if (it?.length == 1) {
+                binding.input3.requestFocus()
+            }
+        }
+
+        binding.input3.addTextChangedListener {
+            if (it?.length == 1) {
+                binding.input4.requestFocus()
+            }
+        }
+
+        //chuyển dữ liệu sang viewmodel để lưu lên OtpUiState
         binding.input1.addTextChangedListener {
             viewModel.input1(it.toString())
         }

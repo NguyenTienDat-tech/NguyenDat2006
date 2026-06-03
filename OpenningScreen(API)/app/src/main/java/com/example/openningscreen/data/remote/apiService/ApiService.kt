@@ -4,6 +4,7 @@ import com.example.openningscreen.core.network.ApiConstants
 import com.example.openningscreen.core.network.ApiResponse
 import com.example.openningscreen.core.network.AuthData
 import com.example.openningscreen.ui.screen.forgotpassword.requestAndResponse.ForgotRequest
+import com.example.openningscreen.ui.screen.forgotpassword.requestAndResponse.OtpData
 import com.example.openningscreen.ui.screen.login.requestAndResponse.LoginRequest
 import com.example.openningscreen.ui.screen.login.requestAndResponse.LoginResponse
 import com.example.openningscreen.ui.screen.otp.requestAndResponse.OtpRequest
@@ -21,7 +22,7 @@ interface ApiService {
     suspend fun register(@Body request: RegisterRequest): ApiResponse<AuthData>
 
     @POST(ApiConstants.FORGOT)
-    suspend fun forgot(@Body request: ForgotRequest): ApiResponse<Nothing>
+    suspend fun forgot(@Body request: ForgotRequest): ApiResponse<OtpData>
 
     @POST(ApiConstants.OTP)
     suspend fun otp(@Body request: OtpRequest): ApiResponse<Nothing>

@@ -53,7 +53,7 @@ class ForgotViewModel(
 
             val success = repository.forgot(email)
 
-            if (success) {
+            if (success.success) {
                 _event.emit(ForgotEvent.NavigationOTPSendEmail(email))
             }
             else {
