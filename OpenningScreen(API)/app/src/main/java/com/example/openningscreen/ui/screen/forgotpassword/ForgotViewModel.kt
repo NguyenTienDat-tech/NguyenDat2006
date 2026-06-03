@@ -1,5 +1,6 @@
 package com.example.openningscreen.ui.screen.forgotpassword
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,13 +29,6 @@ class ForgotViewModel(
         _uiState.value = _uiState.value.copy(email = email)
     }
 
-    //navigationOTP
-    fun otpClick() {
-        viewModelScope.launch {
-            _event.emit(ForgotEvent.NavigationOTP)
-        }
-    }
-
     //navigationLogin
     fun loginClick() {
         viewModelScope.launch {
@@ -60,7 +54,7 @@ class ForgotViewModel(
             val success = repository.forgot(email)
 
             if (success) {
-                _event.emit(ForgotEvent.NavigationOTP)
+                _event.emit(ForgotEvent.NavigationOTPSendEmail(email))
             }
             else {
                 _event.emit(ForgotEvent.Null("Email không tồn tại!"))

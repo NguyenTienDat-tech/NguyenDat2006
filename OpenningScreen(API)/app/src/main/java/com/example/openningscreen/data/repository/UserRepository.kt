@@ -1,5 +1,6 @@
 package com.example.openningscreen.data.repository
 
+import android.util.Log
 import com.example.openningscreen.data.remote.apiService.ApiService
 import com.example.openningscreen.data.remote.retrofitInstance.RetrofitInstance
 import com.example.openningscreen.ui.screen.forgotpassword.ForgotEvent
@@ -45,10 +46,16 @@ class UserRepository(
 
     suspend fun otp(email: String, otp: String): Boolean {
         return try {
+
+            Log.d("OTPtt", "email=$email otp=$otp")
+
             val response = apiService.otp(OtpRequest(email, otp))
+
+            Log.d("OTPhh", response.toString())
 
             return response.success
         } catch (e: Exception) {
+            Log.e("OTP_ERROR", e.message ?: "Unknown")
             false
         }
     }

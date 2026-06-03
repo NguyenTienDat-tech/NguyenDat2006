@@ -1,10 +1,12 @@
 package com.example.openningscreen.ui.screen.otp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -45,11 +47,29 @@ class OtpVerificationFragment : Fragment() {
     private fun setOnCLick() {
         binding.verify.setOnClickListener {
             val email = arguments?.getString("email") ?: ""
+
             viewModel.resetClick(email)
         }
 
+        setupOtp()
+
         binding.vector.setOnClickListener {
             viewModel.forgotClick()
+        }
+    }
+
+    private fun setupOtp() {
+        binding.input1.addTextChangedListener {
+            viewModel.input1(it.toString())
+        }
+        binding.input2.addTextChangedListener {
+            viewModel.input2(it.toString())
+        }
+        binding.input3.addTextChangedListener {
+            viewModel.input3(it.toString())
+        }
+        binding.input4.addTextChangedListener {
+            viewModel.input4(it.toString())
         }
     }
 
@@ -74,7 +94,7 @@ class OtpVerificationFragment : Fragment() {
                             R.id.layout6,
                             Bundle().apply {
                                 putString("email", event.email)
-                                putString("otp", "1234")
+                                putString("otp", binding.input1.text.toString() + binding.input2.text.toString() + binding.input3.text.toString() + binding.input4.text.toString())
                             }
                         )
                     }

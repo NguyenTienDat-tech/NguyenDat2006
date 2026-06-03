@@ -1,6 +1,7 @@
 package com.example.openningscreen.ui.screen.forgotpassword
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,10 +85,6 @@ class ForgotPasswordFragment : Fragment() {
                                 putString("email", event.email)
                             }
                         )
-                    }
-
-                    is ForgotEvent.NavigationOTP -> {
-                        findNavController().navigate(R.id.layout5)
                     }
 
                     is ForgotEvent.NavigationLogin -> {
