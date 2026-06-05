@@ -8,10 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.loading.databinding.ActivityMainBinding
 import com.example.loading.guide.GuideUser
+import com.example.sharePreference.PrefManager
 import kotlin.time.Instant
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var prefManager: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        prefManager = PrefManager(this)
 
         setOnClick()
     }
@@ -35,8 +39,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.guideUser.setOnClickListener {
-            val intent = Intent(this, GuideUser::class.java)
-            startActivity(intent)
+            if (prefManager.isOnPref()) {
+                val intent = Intent(this, Home::class.java)
+                startActivity(intent)
+            }
+            else {
+                val intent = Intent(this, GuideUser::class.java)
+                startActivity(intent)
+            }
+
         }
     }
 
