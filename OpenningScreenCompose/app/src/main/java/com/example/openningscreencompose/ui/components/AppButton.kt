@@ -1,5 +1,6 @@
 package com.example.openningscreencompose.ui.components
 
+import android.graphics.Color
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,35 +17,23 @@ import com.example.openningscreencompose.ui.theme.color_background
 import com.example.openningscreencompose.ui.theme.color_primary
 
 @Composable
-fun AppButton(
+fun AppButton (
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isOutlined: Boolean = false
 ) {
-    if (isOutlined) {
-        OutlinedButton(
-            onClick = onClick,
-            modifier = modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = color_primary)
-        ) {
-            Text(text = text, color = color_background, fontWeight = FontWeight.Bold)
-        }
-    }
-    else {
-        Button (
-            onClick = onClick,
-            modifier = modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(1.dp, color_primary),
-            colors = ButtonDefaults.buttonColors(containerColor = color_background)
-        ) {
-            Text(text = text, color = color_primary, fontWeight = FontWeight.Bold)
-        }
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(50.dp),
+        shape = RoundedCornerShape(100.dp),
+        border = BorderStroke(1.dp, color_primary),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = color_primary,
+            contentColor = color_background
+        )
+    ) {
+        Text(text = text, fontWeight = FontWeight.Bold)
     }
 }
