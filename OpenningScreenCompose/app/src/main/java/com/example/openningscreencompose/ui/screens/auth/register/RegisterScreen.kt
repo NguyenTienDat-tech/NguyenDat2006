@@ -1,19 +1,146 @@
 package com.example.openningscreencompose.ui.screens.auth.register
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.openningscreencompose.R
+import com.example.openningscreencompose.ui.components.AppButton
+import com.example.openningscreencompose.ui.components.AppTextField
+import com.example.openningscreencompose.ui.theme.AppTheme
+import com.example.openningscreencompose.ui.theme.color_primary
+import com.example.openningscreencompose.ui.theme.color_text_tittle
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    onNavigationToLogin: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(24.dp)
     ) {
+        Image(
+            painter = painterResource(R.drawable.logo),
+            contentDescription = "Logo",
+            modifier = Modifier
+                .size(100.dp)
+                .align(Alignment.CenterHorizontally)
+        )
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            style = AppTheme.typography.chaoMung,
+            text = "Đăng ký",
+            color = color_text_tittle,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        var nameText by remember { mutableStateOf("") }
+        AppTextField(
+            label = "Tên đăng nhập",
+            placeholder = "Nhập tên đăng nhập",
+            value = nameText,
+            onValueChange = { newValue ->
+
+            },
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        var emailText by remember { mutableStateOf("") }
+        AppTextField(
+            label = "Email",
+            placeholder = "Nhập email",
+            value = emailText,
+            onValueChange = { newValue ->
+
+            },
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        var passwordText by remember { mutableStateOf("") }
+        AppTextField(
+            label = "Mật khẩu",
+            placeholder = "Mật khẩu phải có 8 ký tự trở lên",
+            value = passwordText,
+            onValueChange = { newValue ->
+
+            },
+            visualTransformation = PasswordVisualTransformation()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        var confirmPasswordText by remember { mutableStateOf("") }
+        AppTextField(
+            label = "Nhập lại mật khẩu",
+            placeholder = "Nhập mật khẩu",
+            value = confirmPasswordText,
+            onValueChange = { newValue ->
+
+            },
+            visualTransformation = PasswordVisualTransformation()
+        )
+
+        Spacer(modifier = Modifier.height(38.dp))
+
+        AppButton(
+            text = "Đăng ký",
+            onClick = {
+
+            },
+        )
+
+        Spacer(modifier = Modifier.height(92.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                style = AppTheme.typography.chu1,
+                text = "Chưa có tài khoản?",
+                fontSize = 14.sp,
+                color = color_text_tittle
+            )
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(
+                style = AppTheme.typography.chu1,
+                text = "Đăng ký",
+                fontSize = 14.sp,
+                color = color_primary,
+                modifier = Modifier.clickable {
+                    onNavigationToLogin()
+                }
+            )
+        }
     }
 }

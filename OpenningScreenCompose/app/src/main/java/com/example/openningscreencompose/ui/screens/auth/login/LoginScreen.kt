@@ -20,13 +20,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.openningscreencompose.R
 import com.example.openningscreencompose.ui.components.AppButton
 import com.example.openningscreencompose.ui.components.AppTextField
+import com.example.openningscreencompose.ui.theme.AppTheme
 import com.example.openningscreencompose.ui.theme.color_primary
 import com.example.openningscreencompose.ui.theme.color_text_tittle
 
@@ -50,18 +51,19 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Hi, Welcome!",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.ExtraBold,
+            style = AppTheme.typography.chaoMung,
+            text = "Đăng nhập",
             color = color_text_tittle,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         var emailText by remember { mutableStateOf("") }
         AppTextField(
-            label = "Email address",
-            placeholder = "helloworld@gmail.com",
+            label = "Tên đăng nhập",
+            placeholder = "Nhập tên đăng nhập hoặc email",
             value = emailText,
             onValueChange = { newValue ->
                 emailText = newValue
@@ -72,8 +74,8 @@ fun LoginScreen(
 
         var passwordText by remember { mutableStateOf("") }
         AppTextField(
-            label = "Password",
-            placeholder = "123456789",
+            label = "Mật khẩu",
+            placeholder = "Nhập mật khẩu",
             value = passwordText,
             onValueChange = { newValue ->
                 passwordText = newValue
@@ -84,9 +86,10 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(15.dp))
 
         Text(
-            text = "Forgot password?",
+            style = AppTheme.typography.chu2,
+            text = "Quên mật khẩu?",
             fontSize = 14.sp,
-            color = color_text_tittle,
+            color = color_primary,
             modifier = Modifier
                 .align(Alignment.End)
         )
@@ -94,7 +97,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(38.dp))
 
         AppButton(
-            text = "Log in",
+            text = "Đăng nhập",
             onClick = {
 
             },
@@ -107,7 +110,8 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Don’t have an account?",
+                style = AppTheme.typography.chu1,
+                text = "Chưa có tài khoản?",
                 fontSize = 14.sp,
                 color = color_text_tittle
             )
@@ -115,7 +119,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.width(4.dp))
 
             Text(
-                text = "Sign up",
+                style = AppTheme.typography.chu1,
+                text = "Đăng ký",
                 fontSize = 14.sp,
                 color = color_primary,
                 modifier = Modifier.clickable {
