@@ -1,6 +1,5 @@
 package com.example.openningscreencompose.ui.components
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.openningscreencompose.ui.theme.AppTheme
 import com.example.openningscreencompose.ui.theme.color_text_hint
 import com.example.openningscreencompose.ui.theme.color_text_tittle
 
@@ -26,14 +25,18 @@ fun AppTextField (
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(text = label, fontSize = 14.sp, color = color_text_tittle)
+        Text(text = label, style = AppTheme.typography.chu1, color = color_text_tittle)
+
         Spacer(modifier = Modifier.height(4.dp))
+
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            placeholder = { Text(placeholder, color = color_text_hint) },
+            placeholder = {
+                Text(placeholder, style = AppTheme.typography.chu1, color = color_text_hint)
+            },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(100.dp),
             trailingIcon = trailingIcon,
             visualTransformation = visualTransformation,
             singleLine = true
