@@ -35,11 +35,14 @@ fun AppTextField (
             placeholder = {
                 Text(placeholder, style = AppTheme.typography.chu1, color = color_text_hint)
             },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(100.dp),
+            textStyle = AppTheme.typography.chu2.copy(color = color_text_tittle),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            shape = RoundedCornerShape(200.dp),
             trailingIcon = trailingIcon,
             visualTransformation = visualTransformation,
-            singleLine = true
+            singleLine = true,
         )
     }
 }
