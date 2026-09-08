@@ -88,7 +88,7 @@ fun RegisterScreen(
             placeholder = "Nhập tên đăng nhập",
             value = nameText,
             onValueChange = { newValue ->
-
+                nameText = newValue
             },
         )
 
@@ -100,7 +100,7 @@ fun RegisterScreen(
             placeholder = "Nhập email",
             value = emailText,
             onValueChange = { newValue ->
-
+                emailText = newValue
             },
         )
 
@@ -112,7 +112,7 @@ fun RegisterScreen(
             placeholder = "Mật khẩu phải có 8 ký tự trở lên",
             value = passwordText,
             onValueChange = { newValue ->
-
+                passwordText = newValue
             },
             visualTransformation = PasswordVisualTransformation()
         )
@@ -125,12 +125,12 @@ fun RegisterScreen(
             placeholder = "Nhập mật khẩu",
             value = confirmPasswordText,
             onValueChange = { newValue ->
-
+                confirmPasswordText = newValue
             },
             visualTransformation = PasswordVisualTransformation()
         )
 
-        Spacer(modifier = Modifier.height(38.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         AppButton(
             text = "Đăng ký",
@@ -139,7 +139,7 @@ fun RegisterScreen(
             },
         )
 
-        Spacer(modifier = Modifier.height(92.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -156,7 +156,7 @@ fun RegisterScreen(
 
             Text(
                 style = AppTheme.typography.chu1,
-                text = "Đăng ký",
+                text = "Đăng nhập",
                 fontSize = 14.sp,
                 color = color_primary,
                 modifier = Modifier.clickable {
