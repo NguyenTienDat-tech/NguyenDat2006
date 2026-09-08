@@ -33,14 +33,16 @@ fun AppNavigation() {
         composable(route = Screen.Login.route) {
             LoginScreen(
                 onNavigationToRegister = {
-                    navController.navigate(Screen.Welcome.route)
+                    navController.navigate(Screen.Register.route)
                 }
             )
         }
 
         composable(route = Screen.Register.route) {
             RegisterScreen(
+                onNavigationToLogin = {
 
+                }
             )
         }
     }
