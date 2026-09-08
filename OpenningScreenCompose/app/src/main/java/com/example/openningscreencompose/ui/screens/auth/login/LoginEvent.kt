@@ -1,4 +1,5 @@
 package com.example.openningscreencompose.ui.screens.auth.login
 
-class LoginEvent {
+sealed class LoginEvent {
+    object NavigationRegister: LoginEvent()
 }

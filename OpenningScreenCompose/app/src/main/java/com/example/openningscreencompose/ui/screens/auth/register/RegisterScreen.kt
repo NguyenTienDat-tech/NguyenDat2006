@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.openningscreencompose.R
 import com.example.openningscreencompose.ui.components.AppButton
 import com.example.openningscreencompose.ui.components.AppTextField
@@ -33,8 +35,28 @@ import com.example.openningscreencompose.ui.theme.color_text_tittle
 
 @Composable
 fun RegisterScreen(
-    onNavigationToLogin: () -> Unit
+    onNavigationToLogin: () -> Unit,
+
+    viewModel: RegisterViewModel = viewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.state.collect { state ->
+
+        }
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is RegisterEvent.NavigationLogin -> {
+                    onNavigationToLogin()
+                }
+            }
+        }
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,7 +160,7 @@ fun RegisterScreen(
                 fontSize = 14.sp,
                 color = color_primary,
                 modifier = Modifier.clickable {
-                    onNavigationToLogin()
+                    viewModel.loginClick()
                 }
             )
         }

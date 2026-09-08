@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.openningscreencompose.R
 import com.example.openningscreencompose.ui.components.AppButton
 import com.example.openningscreencompose.ui.theme.color_text_tittle
@@ -23,8 +28,26 @@ import com.example.openningscreencompose.ui.theme.color_text_tittle
 @Composable
 fun WelcomeScreen(
     onNavigationToLogin: () -> Unit,
-    onNavigationToRegister: () -> Unit
+    onNavigationToRegister: () -> Unit,
+
+    viewModel: WelcomeViewModel = viewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.event.collect { event ->
+            when(event) {
+                is WelcomeEvent.NavigationLogin -> {
+                    onNavigationToLogin()
+                }
+
+                is WelcomeEvent.NavigationRegister -> {
+                    onNavigationToRegister()
+                }
+            }
+        }
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,7 +65,7 @@ fun WelcomeScreen(
         AppButton(
             text = "Sign In",
             onClick = {
-                onNavigationToLogin()
+                viewModel.loginClick()
             },
         )
 
@@ -51,7 +74,7 @@ fun WelcomeScreen(
         AppButton(
             text = "Create account",
             onClick = {
-                onNavigationToRegister()
+                viewModel.registerClick()
             }
         )
     }
