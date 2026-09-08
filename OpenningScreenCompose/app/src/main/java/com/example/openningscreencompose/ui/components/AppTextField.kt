@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.openningscreencompose.ui.theme.AppTheme
+import com.example.openningscreencompose.ui.theme.color_primary
 import com.example.openningscreencompose.ui.theme.color_text_hint
 import com.example.openningscreencompose.ui.theme.color_text_tittle
 
@@ -37,12 +39,20 @@ fun AppTextField (
             },
             textStyle = AppTheme.typography.chu2.copy(color = color_text_tittle),
             modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(200.dp),
             trailingIcon = trailingIcon,
             visualTransformation = visualTransformation,
             singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                //màu viền
+                focusedBorderColor = color_primary,
+                unfocusedBorderColor = color_text_hint,
+
+                //màu khi nhập
+                focusedTextColor = color_text_tittle,
+                unfocusedTextColor = color_text_tittle
+            )
         )
     }
 }
